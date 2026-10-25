@@ -9,8 +9,6 @@ from typing import Any
 
 @dataclass(frozen=True, slots=True)
 class Submission:
-    """Версия сдачи лабораторной работы."""
-
     submission_id: str
     assignment_id: str
     student_id: str
@@ -21,7 +19,6 @@ class Submission:
     ai_declaration: str = ""
 
     def content_hash(self) -> str:
-        """SHA-256 по содержательным полям сдачи."""
         payload = {
             "assignment_id": self.assignment_id,
             "student_id": self.student_id,
@@ -35,7 +32,6 @@ class Submission:
         return hashlib.sha256(encoded).hexdigest()
 
     def to_dict(self) -> dict[str, Any]:
-        """Сериализация для CLI."""
         return {
             "submission_id": self.submission_id,
             "assignment_id": self.assignment_id,
@@ -46,5 +42,21 @@ class Submission:
             "ai_declaration": self.ai_declaration,
             "timestamp": self.timestamp.isoformat(),
             "content_hash": self.content_hash(),
+        }
+
+
+@dataclass(frozen=True, slots=True)
+class Assignment:
+    assignment_id: str
+    name: str
+    description: str = ""
+    allowed_templates: tuple[str, ...] = ()
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "assignment_id": self.assignment_id,
+            "name": self.name,
+            "description": self.description,
+            "allowed_templates": list(self.allowed_templates),
         }
 

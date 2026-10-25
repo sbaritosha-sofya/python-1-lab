@@ -11,7 +11,7 @@ from .repository import InMemorySubmissionRepository, SubmissionRepository
 
 @dataclass(frozen=True, slots=True)
 class AcceptResult:
-    status: str  # accepted | duplicate | conflict | error
+    status: str
     submission: Submission | None = None
     attempted: Submission | None = None
     error: dict[str, Any] | None = None
@@ -27,20 +27,11 @@ class AcceptResult:
 
 @dataclass
 class SubmissionService:
-    """Доменный сервис приёма сдач.
-
-    Не зависит от HTTP/CLI и работает только с доменными моделями.
-    """
-
     repository: SubmissionRepository = field(default_factory=InMemorySubmissionRepository)
 
     def accept(self, raw: Any) -> AcceptResult:
-        """Распарсить и сохранить сдачу.
-
-        При повторном submission_id и совпадении хеша возвращает duplicate.
-        При совпадении идентификатора с другим содержимым -- conflict.
-        """
         try:
+
             submission = parse_submission(raw)
         except SubmissionValidationError as exc:
             return AcceptResult(

@@ -7,31 +7,17 @@ from .models import Submission
 
 
 class SubmissionRepository(Protocol):
-    """Контракт репозитория сдач."""
-
     def get(self, submission_id: str) -> Submission | None: ...
 
     def save(
         self, submission: Submission
-    ) -> tuple[str, Submission]:
-        """Сохранить сдачу.
-
-        Возвращает пару (status, submission), где status -- accepted,
-        duplicate или conflict.
-        """
-        ...
+    ) -> tuple[str, Submission]: ...
 
     def list(self) -> Iterable[Submission]: ...
 
 
 @dataclass
 class InMemorySubmissionRepository:
-    """In-memory реализация репозитория.
-
-    Хранит кортеж (Submission, content_hash) для быстрой проверки дубликатов
-    и конфликтов.
-    """
-
     _store: dict[str, tuple[Submission, str]] = field(default_factory=dict)
 
     def get(self, submission_id: str) -> Submission | None:

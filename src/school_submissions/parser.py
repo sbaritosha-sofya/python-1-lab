@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import Any
 
 from .exceptions import SubmissionValidationError
-from .models import Submission
+from .models import Assignment, Submission
 
 _REQUIRED_FIELDS = (
     "submission_id",
@@ -16,15 +16,10 @@ _REQUIRED_FIELDS = (
     "timestamp",
 )
 _STRING_FIELDS = ("submission_id", "assignment_id", "student_id", "text", "code")
-_OPTIONAL_FIELDS = ("ai_declaration",)
+_OPTIONAL_FIELDS = ("ai_declaration", "content_hash")
 
 
 def parse_submission(raw: Any) -> Submission:
-    """Преобразовать сырой словарь в :class:`Submission`.
-
-    Входной объект не изменяется. При любой ошибке выбрасывается
-    :class:`SubmissionValidationError` с кодом ``format`` или ``schema``.
-    """
     if not isinstance(raw, dict):
         raise SubmissionValidationError(
             code="schema",
@@ -122,4 +117,45 @@ def parse_submission(raw: Any) -> Submission:
         used_ai=used_ai,
         timestamp=timestamp,
         ai_declaration=ai_declaration,
+    )
+
+
+def parse_assignment(raw: Any) -> Assignment:
+    if not isinstance(raw, dict):
+        raise SubmissionValidationError(
+            code="schema",
+            field="<root>",
+            message="Assignment must be a JSON object",
+        )
+    required = ("assignment_id", "name")
+    missing = [field for field in required if field not in raw]
+    if missing:
+        field = missing[0]
+        raise SubmissionValidationError(
+            code="schema",
+            field=field,
+            message=f"Missing required field: {field}",
+        )
+    for field in ("assignment_id", "name", "description"):
+        value = raw.get(field, "")
+        if not isinstance(value, str):
+            raise SubmissionValidationError(
+                code="schema",
+                field=field,
+                message=f"{field} must be a string",
+            )
+    templates = raw.get("allowed_templates", [])
+    if not isinstance(templates, list) or not all(
+        isinstance(item, str) for item in templates
+    ):
+        raise SubmissionValidationError(
+            code="schema",
+            field="allowed_templates",
+            message="allowed_templates must be a list of strings",
+        )
+    return Assignment(
+        assignment_id=raw["assignment_id"],
+        name=raw["name"],
+        description=raw.get("description", ""),
+        allowed_templates=tuple(templates),
     )

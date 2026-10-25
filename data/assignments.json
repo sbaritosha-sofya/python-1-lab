@@ -1,0 +1,9 @@
+{
+  "assignment_id": "lab-1",
+  "name": "Введение в Python",
+  "description": "Первая лабораторная работа по основам Python.",
+  "allowed_templates": [
+    "def solve():",
+    "return 42"
+  ]
+}
