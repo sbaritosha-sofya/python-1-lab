@@ -1,0 +1,7 @@
+{"submission_id":"bad-001","assignment_id":"lab-1","student_id":"","text":"Text\n","code":"code\n","used_ai":false,"ai_declaration":"","timestamp":"2026-10-11T12:00:00+03:00"}
+{"submission_id":"bad-002","assignment_id":"lab-1","student_id":"x","text":"Text\n","code":"code\n","used_ai":false,"ai_declaration":"","timestamp":"2026-10-11T12:00:00"}
+{"submission_id":"bad-003","assignment_id":"lab-1","student_id":"x","text":"Text\n","code":"code\n","used_ai":false,"ai_declaration":"","timestamp":"2026-10-11T12:00:00+03:00","extra_field":"surprise"}
+{"submission_id":"bad-004","assignment_id":"lab-1","student_id":"x","text":"Text\n","code":"code\n","used_ai":"no","ai_declaration":"","timestamp":"2026-10-11T12:00:00+03:00"}
+{"submission_id":"bad-005","assignment_id":"lab-1","student_id":"x","text":"Text\n","code":"code\n","used_ai":true,"ai_declaration":"","timestamp":"2026-10-11T12:00:00+03:00"}
+this is not json at all
+{"submission_id":"bad-006","assignment_id":"lab-1"}

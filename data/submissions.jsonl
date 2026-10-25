@@ -1,0 +1,4 @@
+{"submission_id":"sub-001","assignment_id":"lab-1","student_id":"student-a","text":"Hello\nworld\n","code":"print('hello')\n","used_ai":false,"ai_declaration":"","timestamp":"2026-10-11T12:00:00+03:00"}
+{"submission_id":"sub-001","assignment_id":"lab-1","student_id":"student-a","text":"Hello\nworld\n","code":"print('hello')\n","used_ai":false,"ai_declaration":"","timestamp":"2026-10-11T12:00:00+03:00"}
+{"submission_id":"sub-001","assignment_id":"lab-1","student_id":"student-a","text":"Different text\n","code":"print('hello')\n","used_ai":false,"ai_declaration":"","timestamp":"2026-10-11T12:00:00+03:00"}
+{"submission_id":"sub-002","assignment_id":"lab-1","student_id":"student-b","text":"Task solution\nSecond line\n","code":"def solve():\n    return 42\n","used_ai":true,"ai_declaration":"Generated with AI assistant, verified manually.","timestamp":"2026-10-11T13:30:00+00:00"}

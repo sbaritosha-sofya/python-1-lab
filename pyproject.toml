@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "school-submissions"
+version = "1.0.0"
+description = "Основа системы онлайн-школы: приём лабораторных работ"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Student"},
+]
+keywords = ["education", "submissions", "validation"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+
+[project.scripts]
+school-submissions = "school_submissions.cli:main"
+
+
+[tool.setuptools.packages.find]
+where = ["src"]
