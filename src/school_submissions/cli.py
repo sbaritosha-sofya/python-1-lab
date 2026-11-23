@@ -8,6 +8,7 @@ from typing import Any
 
 from .analysis_service import AnalysisService
 from .comparison import find_same_student_revisions, find_top_k
+from .evaluation import evaluate_corpus, render_markdown
 from .features import FEATURE_VERSION, supported_methods
 from .models import Assignment, Submission
 from .parser import parse_assignment, parse_submission
@@ -181,6 +182,30 @@ def cmd_find_similar(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_evaluate_similarity(args: argparse.Namespace) -> int:
+    report = evaluate_corpus(
+        args.corpus,
+        args.methods,
+        threshold_step=args.threshold_step,
+        max_evidence=args.max_evidence,
+    )
+    payload = json.dumps(report, ensure_ascii=False, indent=2)
+    wrote = False
+    if args.output:
+        output = Path(args.output)
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(payload + "\n", encoding="utf-8")
+        wrote = True
+    if args.markdown:
+        markdown = Path(args.markdown)
+        markdown.parent.mkdir(parents=True, exist_ok=True)
+        markdown.write_text(render_markdown(report) + "\n", encoding="utf-8")
+        wrote = True
+    if not wrote:
+        print(payload)
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="school-submissions",
@@ -240,6 +265,38 @@ def build_parser() -> argparse.ArgumentParser:
         help="Разрешить повторные версии одного студента в top-k",
     )
     similar_parser.set_defaults(func=cmd_find_similar)
+
+    evaluate_parser = subparsers.add_parser(
+        "evaluate-similarity",
+        help="Оценка качества методов на учебном корпусе",
+    )
+    evaluate_parser.add_argument("corpus", help="Каталог корпуса")
+    evaluate_parser.add_argument(
+        "--methods",
+        nargs="+",
+        choices=supported_methods(),
+        default=list(supported_methods()),
+        help="Сравниваемые методы",
+    )
+    evaluate_parser.add_argument(
+        "--threshold-step",
+        type=float,
+        default=0.01,
+        help="Шаг сетки порога review_required",
+    )
+    evaluate_parser.add_argument(
+        "--max-evidence",
+        type=int,
+        default=5,
+        help="Сколько фрагментов evidence сохранять в разборе ошибок",
+    )
+    evaluate_parser.add_argument("--output", default="", help="Путь к JSON-отчёту")
+    evaluate_parser.add_argument(
+        "--markdown",
+        default="",
+        help="Путь к Markdown-отчёту",
+    )
+    evaluate_parser.set_defaults(func=cmd_evaluate_similarity)
 
     return parser
 

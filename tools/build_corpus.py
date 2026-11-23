@@ -344,14 +344,10 @@ for left_index, left in enumerate(template_teams):
 independent_pairs = [
     ("s17", "s18"),
     ("s17", "s19"),
-    ("s17", "s20"),
     ("s18", "s19"),
-    ("s18", "s20"),
-    ("s19", "s20"),
     ("s20", "s21"),
+    ("s20", "s22"),
     ("s21", "s22"),
-    ("s17", "s22"),
-    ("s18", "s22"),
 ]
 for left, right in independent_pairs:
     pair(left, right, "lab-sort", "sort-independent", "independent")

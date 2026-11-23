@@ -1,0 +1,138 @@
+{
+  "environment": {
+    "python": "3.13.7",
+    "platform": "Linux-6.17.0-41-generic-x86_64-with-glibc2.42",
+    "cpu_count": 14,
+    "pythonhashseed": "0"
+  },
+  "parameters": {
+    "sizes": [
+      100,
+      1000,
+      5000
+    ],
+    "repeats": 3,
+    "seed": 42,
+    "query_limit": 100,
+    "methods": [
+      "token-3gram",
+      "ast-normalized"
+    ],
+    "ngram_size": 3
+  },
+  "measurements": {
+    "token-3gram": {
+      "100": {
+        "wall_seconds_runs": [
+          0.08064778600237332,
+          0.08710442799929297,
+          0.10589921700011473
+        ],
+        "wall_seconds_median": 0.08710442799929297,
+        "peak_mib_runs": [
+          0.850275993347168,
+          0.850275993347168,
+          0.850275993347168
+        ],
+        "peak_mib_median": 0.850275993347168,
+        "comparisons": 9900
+      },
+      "1000": {
+        "wall_seconds_runs": [
+          0.9488933389948215,
+          0.9321167890011566,
+          0.9559212669992121
+        ],
+        "wall_seconds_median": 0.9488933389948215,
+        "peak_mib_runs": [
+          8.237366676330566,
+          8.237366676330566,
+          8.237366676330566
+        ],
+        "peak_mib_median": 8.237366676330566,
+        "comparisons": 99900
+      },
+      "5000": {
+        "wall_seconds_runs": [
+          5.660310013998242,
+          5.7362618440020015,
+          5.644830621997244
+        ],
+        "wall_seconds_median": 5.660310013998242,
+        "peak_mib_runs": [
+          39.80472946166992,
+          39.80472946166992,
+          39.80472946166992
+        ],
+        "peak_mib_median": 39.80472946166992,
+        "comparisons": 499900
+      }
+    },
+    "ast-normalized": {
+      "100": {
+        "wall_seconds_runs": [
+          0.11232806599582545,
+          0.10896065900305985,
+          0.10772993799764663
+        ],
+        "wall_seconds_median": 0.10896065900305985,
+        "peak_mib_runs": [
+          0.9018821716308594,
+          0.9016456604003906,
+          0.9009037017822266
+        ],
+        "peak_mib_median": 0.9016456604003906,
+        "comparisons": 9900
+      },
+      "1000": {
+        "wall_seconds_runs": [
+          1.1924720379975042,
+          1.1946677999949316,
+          1.2259983890035073
+        ],
+        "wall_seconds_median": 1.1946677999949316,
+        "peak_mib_runs": [
+          8.592973709106445,
+          8.592928886413574,
+          8.592942237854004
+        ],
+        "peak_mib_median": 8.592942237854004,
+        "comparisons": 99900
+      },
+      "5000": {
+        "wall_seconds_runs": [
+          7.049581651997869,
+          7.144428792998951,
+          7.018556550006906
+        ],
+        "wall_seconds_median": 7.049581651997869,
+        "peak_mib_runs": [
+          41.07140636444092,
+          41.071444511413574,
+          41.07146453857422
+        ],
+        "peak_mib_median": 41.071444511413574,
+        "comparisons": 499900
+      }
+    }
+  },
+  "optimization": {
+    "description": "score-only benchmark: union set allocation and per-pair template span scan (legacy) versus union size arithmetic and precomputed template_units",
+    "pairs": 1996,
+    "repeats": 3,
+    "legacy_seconds_runs": [
+      0.013250367002910934,
+      0.013471129997924436,
+      0.013536031001422089
+    ],
+    "optimized_seconds_runs": [
+      0.0021710840010200627,
+      0.002089904999593273,
+      0.0021845579976798035
+    ],
+    "legacy_seconds_median": 0.013471129997924436,
+    "optimized_seconds_median": 0.0021710840010200627,
+    "speedup": 6.204794467461948,
+    "scores_equal": true
+  }
+}

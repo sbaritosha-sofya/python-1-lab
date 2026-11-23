@@ -1,7 +1,15 @@
-__version__ = "1.2.0"
+__version__ = "1.3.0"
 
 from .analysis_service import AnalysisService
 from .comparison import PairSimilarity, compare_features, find_top_k
+from .evaluation import (
+    Corpus,
+    ScoredPair,
+    evaluate_corpus,
+    load_corpus,
+    render_markdown,
+    select_threshold,
+)
 from .features import (
     AST_METHOD,
     FEATURE_VERSION,
@@ -31,6 +39,7 @@ __all__ = [
     "Analyzer",
     "AnalyzerRegistry",
     "AST_METHOD",
+    "Corpus",
     "Assignment",
     "FEATURE_VERSION",
     "FeatureSet",
@@ -39,6 +48,7 @@ __all__ = [
     "JSONLSource",
     "LengthAnalyzer",
     "PairSimilarity",
+    "ScoredPair",
     "Source",
     "TOKEN_METHOD",
     "Submission",
@@ -48,8 +58,12 @@ __all__ = [
     "build_features",
     "build_token_features",
     "collect_features",
+    "evaluate_corpus",
     "compare_features",
     "find_top_k",
     "index_size_bytes",
     "iter_features",
+    "load_corpus",
+    "render_markdown",
+    "select_threshold",
 ]

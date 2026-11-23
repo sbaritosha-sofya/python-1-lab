@@ -68,19 +68,6 @@ class PairSimilarity:
         }
 
 
-def _span_is_template(span: LineRange, template_lines: frozenset[int]) -> bool:
-    if not template_lines:
-        return False
-    return all(line in template_lines for line in range(span.start, span.end + 1))
-
-
-def _unit_is_template(feature: FeatureSet, unit: Unit) -> bool:
-    ranges = feature.spans.get(unit, ())
-    if not ranges:
-        return False
-    return all(_span_is_template(span, feature.template_lines) for span in ranges)
-
-
 def _empty_result(
     left: FeatureSet,
     right: FeatureSet,
@@ -127,13 +114,13 @@ def compare_features(
         return _empty_result(left, right, "syntax_error", "source could not be parsed")
 
     shared = left.units & right.units
-    union = left.units | right.units
-    if not union:
+    union_size = len(left.units) + len(right.units) - len(shared)
+    if union_size == 0:
         return _empty_result(left, right, "insufficient_data", "empty unit union")
 
-    template_shared = {unit for unit in shared if _unit_is_template(left, unit) and _unit_is_template(right, unit)}
+    template_shared = shared & left.template_units & right.template_units
     template_only = bool(shared) and template_shared == shared
-    score = len(shared) / len(union)
+    score = len(shared) / union_size
 
     evidence: list[EvidenceItem] = []
     for unit in sorted(shared):
@@ -172,7 +159,7 @@ def compare_features(
         reason="all shared units belong to the allowed template" if template_only else None,
         score=score,
         shared_units=len(shared),
-        union_units=len(union),
+        union_units=union_size,
         shared_template_units=len(template_shared),
         template_only=template_only,
         structure_equal=structure_equal,

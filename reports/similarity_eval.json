@@ -1,0 +1,676 @@
+{
+  "corpus": {
+    "directory": "data/corpus",
+    "assignments": [
+      "lab-counter",
+      "lab-sort"
+    ],
+    "submissions": 33,
+    "origins": 33,
+    "pairs": 41,
+    "submissions_by_split": {
+      "setup": 14,
+      "eval": 19
+    },
+    "pairs_by_relation": {
+      "exact_copy": 6,
+      "reformatted_copy": 8,
+      "renamed_copy": 8,
+      "comment_change": 3,
+      "same_template": 10,
+      "independent": 6
+    },
+    "template_pairs": 10,
+    "validation": "ok"
+  },
+  "config": {
+    "methods": [
+      "token-3gram",
+      "ast-normalized"
+    ],
+    "feature_version": "1.0.0",
+    "threshold_step": 0.01,
+    "max_evidence": 5,
+    "positive_relations": [
+      "comment_change",
+      "exact_copy",
+      "reformatted_copy",
+      "renamed_copy"
+    ],
+    "negative_relations": [
+      "independent",
+      "same_template"
+    ]
+  },
+  "methods": {
+    "token-3gram": {
+      "method_version": "1.0.0",
+      "threshold": 0.61,
+      "threshold_selection": {
+        "threshold": 0.61,
+        "criterion": "max_f0_5_then_balanced_accuracy_then_margin",
+        "step": 0.01,
+        "grid_min": 0.0,
+        "grid_max": 1.0,
+        "metrics": {
+          "threshold": 0.61,
+          "total": 15,
+          "tp": 8,
+          "fp": 0,
+          "tn": 3,
+          "fn": 4,
+          "flagged": 8,
+          "uncertain": 0,
+          "review_rate": 0.5333333333333333,
+          "uncertain_share": 0.0,
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "specificity": 1.0,
+          "false_positive_rate": 0.0,
+          "f1": 0.8,
+          "f0_5": 0.9090909090909091
+        }
+      },
+      "setup": {
+        "threshold": 0.61,
+        "total": 15,
+        "tp": 8,
+        "fp": 0,
+        "tn": 3,
+        "fn": 4,
+        "flagged": 8,
+        "uncertain": 0,
+        "review_rate": 0.5333333333333333,
+        "uncertain_share": 0.0,
+        "precision": 1.0,
+        "recall": 0.6666666666666666,
+        "specificity": 1.0,
+        "false_positive_rate": 0.0,
+        "f1": 0.8
+      },
+      "eval": {
+        "threshold": 0.61,
+        "total": 26,
+        "tp": 9,
+        "fp": 10,
+        "tn": 3,
+        "fn": 4,
+        "flagged": 19,
+        "uncertain": 0,
+        "review_rate": 0.7307692307692307,
+        "uncertain_share": 0.0,
+        "precision": 0.47368421052631576,
+        "recall": 0.6923076923076923,
+        "specificity": 0.23076923076923078,
+        "false_positive_rate": 0.7692307692307693,
+        "f1": 0.5625
+      },
+      "eval_without_template": {
+        "threshold": 0.61,
+        "total": 16,
+        "tp": 9,
+        "fp": 0,
+        "tn": 3,
+        "fn": 4,
+        "flagged": 9,
+        "uncertain": 0,
+        "review_rate": 0.5625,
+        "uncertain_share": 0.0,
+        "precision": 1.0,
+        "recall": 0.6923076923076923,
+        "specificity": 1.0,
+        "false_positive_rate": 0.0,
+        "f1": 0.8181818181818181
+      },
+      "by_relation": {
+        "exact_copy": {
+          "pairs": 3,
+          "flagged": 3,
+          "uncertain": 0,
+          "scores": {
+            "count": 3,
+            "defined": 3,
+            "mean": 1.0,
+            "min": 1.0,
+            "max": 1.0
+          }
+        },
+        "independent": {
+          "pairs": 3,
+          "flagged": 0,
+          "uncertain": 0,
+          "scores": {
+            "count": 3,
+            "defined": 3,
+            "mean": 0.15019309585885232,
+            "min": 0.0784313725490196,
+            "max": 0.22580645161290322
+          }
+        },
+        "reformatted_copy": {
+          "pairs": 6,
+          "flagged": 6,
+          "uncertain": 0,
+          "scores": {
+            "count": 6,
+            "defined": 6,
+            "mean": 1.0,
+            "min": 1.0,
+            "max": 1.0
+          }
+        },
+        "renamed_copy": {
+          "pairs": 4,
+          "flagged": 0,
+          "uncertain": 0,
+          "scores": {
+            "count": 4,
+            "defined": 4,
+            "mean": 0.1189358372456964,
+            "min": 0.1111111111111111,
+            "max": 0.1267605633802817
+          }
+        },
+        "same_template": {
+          "pairs": 10,
+          "flagged": 10,
+          "uncertain": 0,
+          "scores": {
+            "count": 10,
+            "defined": 10,
+            "mean": 1.0,
+            "min": 1.0,
+            "max": 1.0
+          }
+        }
+      },
+      "statuses": {
+        "ok": 16,
+        "template_only": 10
+      },
+      "template_slice": {
+        "pairs": 10,
+        "flagged": 10,
+        "flagged_share": 1.0,
+        "explained_as_template": 10,
+        "scores": {
+          "count": 10,
+          "defined": 10,
+          "mean": 1.0,
+          "min": 1.0,
+          "max": 1.0
+        }
+      },
+      "index_size_bytes_estimate": 29495
+    },
+    "ast-normalized": {
+      "method_version": "1.0.0",
+      "threshold": 0.65,
+      "threshold_selection": {
+        "threshold": 0.65,
+        "criterion": "max_f0_5_then_balanced_accuracy_then_margin",
+        "step": 0.01,
+        "grid_min": 0.0,
+        "grid_max": 1.0,
+        "metrics": {
+          "threshold": 0.65,
+          "total": 15,
+          "tp": 12,
+          "fp": 0,
+          "tn": 3,
+          "fn": 0,
+          "flagged": 12,
+          "uncertain": 0,
+          "review_rate": 0.8,
+          "uncertain_share": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 1.0,
+          "false_positive_rate": 0.0,
+          "f1": 1.0,
+          "f0_5": 1.0
+        }
+      },
+      "setup": {
+        "threshold": 0.65,
+        "total": 15,
+        "tp": 12,
+        "fp": 0,
+        "tn": 3,
+        "fn": 0,
+        "flagged": 12,
+        "uncertain": 0,
+        "review_rate": 0.8,
+        "uncertain_share": 0.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "specificity": 1.0,
+        "false_positive_rate": 0.0,
+        "f1": 1.0
+      },
+      "eval": {
+        "threshold": 0.65,
+        "total": 26,
+        "tp": 13,
+        "fp": 10,
+        "tn": 3,
+        "fn": 0,
+        "flagged": 23,
+        "uncertain": 0,
+        "review_rate": 0.8846153846153846,
+        "uncertain_share": 0.0,
+        "precision": 0.5652173913043478,
+        "recall": 1.0,
+        "specificity": 0.23076923076923078,
+        "false_positive_rate": 0.7692307692307693,
+        "f1": 0.7222222222222222
+      },
+      "eval_without_template": {
+        "threshold": 0.65,
+        "total": 16,
+        "tp": 13,
+        "fp": 0,
+        "tn": 3,
+        "fn": 0,
+        "flagged": 13,
+        "uncertain": 0,
+        "review_rate": 0.8125,
+        "uncertain_share": 0.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "specificity": 1.0,
+        "false_positive_rate": 0.0,
+        "f1": 1.0
+      },
+      "by_relation": {
+        "exact_copy": {
+          "pairs": 3,
+          "flagged": 3,
+          "uncertain": 0,
+          "scores": {
+            "count": 3,
+            "defined": 3,
+            "mean": 1.0,
+            "min": 1.0,
+            "max": 1.0
+          }
+        },
+        "independent": {
+          "pairs": 3,
+          "flagged": 0,
+          "uncertain": 0,
+          "scores": {
+            "count": 3,
+            "defined": 3,
+            "mean": 0.0872588872947553,
+            "min": 0.0392156862745098,
+            "max": 0.125
+          }
+        },
+        "reformatted_copy": {
+          "pairs": 6,
+          "flagged": 6,
+          "uncertain": 0,
+          "scores": {
+            "count": 6,
+            "defined": 6,
+            "mean": 1.0,
+            "min": 1.0,
+            "max": 1.0
+          }
+        },
+        "renamed_copy": {
+          "pairs": 4,
+          "flagged": 4,
+          "uncertain": 0,
+          "scores": {
+            "count": 4,
+            "defined": 4,
+            "mean": 1.0,
+            "min": 1.0,
+            "max": 1.0
+          }
+        },
+        "same_template": {
+          "pairs": 10,
+          "flagged": 10,
+          "uncertain": 0,
+          "scores": {
+            "count": 10,
+            "defined": 10,
+            "mean": 1.0,
+            "min": 1.0,
+            "max": 1.0
+          }
+        }
+      },
+      "statuses": {
+        "ok": 16,
+        "template_only": 10
+      },
+      "template_slice": {
+        "pairs": 10,
+        "flagged": 10,
+        "flagged_share": 1.0,
+        "explained_as_template": 10,
+        "scores": {
+          "count": 10,
+          "defined": 10,
+          "mean": 1.0,
+          "min": 1.0,
+          "max": 1.0
+        }
+      },
+      "index_size_bytes_estimate": 39199
+    }
+  },
+  "method_agreement": {
+    "methods": [
+      "token-3gram",
+      "ast-normalized"
+    ],
+    "pairs": 26,
+    "both_flagged": 19,
+    "first_only": 0,
+    "second_only": 4,
+    "neither_flagged": 3,
+    "by_relation": {
+      "exact_copy": {
+        "both_flagged": 3,
+        "first_only": 0,
+        "second_only": 0,
+        "neither_flagged": 0
+      },
+      "renamed_copy": {
+        "both_flagged": 0,
+        "first_only": 0,
+        "second_only": 4,
+        "neither_flagged": 0
+      },
+      "reformatted_copy": {
+        "both_flagged": 6,
+        "first_only": 0,
+        "second_only": 0,
+        "neither_flagged": 0
+      },
+      "same_template": {
+        "both_flagged": 10,
+        "first_only": 0,
+        "second_only": 0,
+        "neither_flagged": 0
+      },
+      "independent": {
+        "both_flagged": 0,
+        "first_only": 0,
+        "second_only": 0,
+        "neither_flagged": 3
+      }
+    }
+  },
+  "errors": [
+    {
+      "method": "token-3gram",
+      "pair_id": "pair-020",
+      "left_submission_id": "s23",
+      "right_submission_id": "s24",
+      "assignment_id": "lab-sort",
+      "relation": "same_template",
+      "template_only": true,
+      "split": "eval",
+      "score": 1.0,
+      "threshold": 0.61,
+      "flagged": true,
+      "ground_truth_positive": false,
+      "category": "template_false_positive",
+      "explanation": "Совпадение целиком объяснено разрешённым шаблоном: пара попала в review_required из-за высокого сходства, но это не доказательство нарушения.",
+      "evidence": [
+        {
+          "unit": [
+            "(",
+            "items",
+            ")"
+          ],
+          "left": {
+            "line_start": 1,
+            "line_end": 1
+          },
+          "right": {
+            "line_start": 1,
+            "line_end": 1
+          },
+          "template_only": true
+        },
+        {
+          "unit": [
+            ")",
+            ":",
+            "return"
+          ],
+          "left": {
+            "line_start": 1,
+            "line_end": 2
+          },
+          "right": {
+            "line_start": 1,
+            "line_end": 2
+          },
+          "template_only": true
+        },
+        {
+          "unit": [
+            ":",
+            "return",
+            "sorted"
+          ],
+          "left": {
+            "line_start": 1,
+            "line_end": 2
+          },
+          "right": {
+            "line_start": 1,
+            "line_end": 2
+          },
+          "template_only": true
+        }
+      ]
+    },
+    {
+      "method": "ast-normalized",
+      "pair_id": "pair-020",
+      "left_submission_id": "s23",
+      "right_submission_id": "s24",
+      "assignment_id": "lab-sort",
+      "relation": "same_template",
+      "template_only": true,
+      "split": "eval",
+      "score": 1.0,
+      "threshold": 0.65,
+      "flagged": true,
+      "ground_truth_positive": false,
+      "category": "template_false_positive",
+      "explanation": "Совпадение целиком объяснено разрешённым шаблоном: пара попала в review_required из-за высокого сходства, но это не доказательство нарушения.",
+      "evidence": [
+        {
+          "unit": [
+            "Call",
+            "Name:id2",
+            "Load"
+          ],
+          "left": {
+            "line_start": 2,
+            "line_end": 2
+          },
+          "right": {
+            "line_start": 2,
+            "line_end": 2
+          },
+          "template_only": true
+        },
+        {
+          "unit": [
+            "FunctionDef:id0",
+            "arguments",
+            "arg:id1"
+          ],
+          "left": {
+            "line_start": 1,
+            "line_end": 2
+          },
+          "right": {
+            "line_start": 1,
+            "line_end": 2
+          },
+          "template_only": true
+        },
+        {
+          "unit": [
+            "Load",
+            "Name:id1",
+            "Load"
+          ],
+          "left": {
+            "line_start": 2,
+            "line_end": 2
+          },
+          "right": {
+            "line_start": 2,
+            "line_end": 2
+          },
+          "template_only": true
+        }
+      ]
+    },
+    {
+      "method": "token-3gram",
+      "pair_id": "pair-016",
+      "left_submission_id": "s13",
+      "right_submission_id": "s15",
+      "assignment_id": "lab-sort",
+      "relation": "renamed_copy",
+      "template_only": false,
+      "split": "eval",
+      "score": 0.1111111111111111,
+      "threshold": 0.61,
+      "flagged": false,
+      "ground_truth_positive": true,
+      "category": "false_negative",
+      "explanation": "token-3gram: переименование переменных снизило сходство ниже порога; именно такой случай должен ловить структурный метод.",
+      "evidence": [
+        {
+          "unit": [
+            ")",
+            "return",
+            "sorted"
+          ],
+          "left": {
+            "line_start": 5,
+            "line_end": 6
+          },
+          "right": {
+            "line_start": 5,
+            "line_end": 6
+          },
+          "template_only": false
+        },
+        {
+          "unit": [
+            ".",
+            "append",
+            "("
+          ],
+          "left": {
+            "line_start": 5,
+            "line_end": 5
+          },
+          "right": {
+            "line_start": 5,
+            "line_end": 5
+          },
+          "template_only": false
+        },
+        {
+          "unit": [
+            "=",
+            "[",
+            "]"
+          ],
+          "left": {
+            "line_start": 2,
+            "line_end": 2
+          },
+          "right": {
+            "line_start": 2,
+            "line_end": 2
+          },
+          "template_only": false
+        }
+      ]
+    },
+    {
+      "method": "token-3gram",
+      "pair_id": "pair-019",
+      "left_submission_id": "s15",
+      "right_submission_id": "s16",
+      "assignment_id": "lab-sort",
+      "relation": "renamed_copy",
+      "template_only": false,
+      "split": "eval",
+      "score": 0.1111111111111111,
+      "threshold": 0.61,
+      "flagged": false,
+      "ground_truth_positive": true,
+      "category": "false_negative",
+      "explanation": "token-3gram: переименование переменных снизило сходство ниже порога; именно такой случай должен ловить структурный метод.",
+      "evidence": [
+        {
+          "unit": [
+            ")",
+            "return",
+            "sorted"
+          ],
+          "left": {
+            "line_start": 5,
+            "line_end": 6
+          },
+          "right": {
+            "line_start": 8,
+            "line_end": 10
+          },
+          "template_only": false
+        },
+        {
+          "unit": [
+            ".",
+            "append",
+            "("
+          ],
+          "left": {
+            "line_start": 5,
+            "line_end": 5
+          },
+          "right": {
+            "line_start": 8,
+            "line_end": 8
+          },
+          "template_only": false
+        },
+        {
+          "unit": [
+            "=",
+            "[",
+            "]"
+          ],
+          "left": {
+            "line_start": 2,
+            "line_end": 2
+          },
+          "right": {
+            "line_start": 3,
+            "line_end": 3
+          },
+          "template_only": false
+        }
+      ]
+    }
+  ]
+}

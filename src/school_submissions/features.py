@@ -58,6 +58,7 @@ class FeatureSet:
     units: frozenset[Unit]
     spans: dict[Unit, tuple[LineRange, ...]]
     template_lines: frozenset[int]
+    template_units: frozenset[Unit]
     structure_hash: str | None = None
 
     def approximate_size_bytes(self) -> int:
@@ -77,6 +78,7 @@ class FeatureSet:
             "line_count": self.line_count,
             "unit_count": self.unit_count,
             "unit_set_size": len(self.units),
+            "template_unit_count": len(self.template_units),
             "template_lines": sorted(self.template_lines),
             "structure_hash": self.structure_hash,
             "approximate_size_bytes": self.approximate_size_bytes(),
@@ -99,9 +101,9 @@ def _template_lines(code: str, assignment: Assignment) -> frozenset[int]:
     if not patterns:
         return frozenset()
     matched: set[int] = set()
+    normalized = {pattern.strip() for pattern in patterns}
     for line_no, line in enumerate(code.splitlines(), start=1):
-        stripped = line.strip()
-        if any(pattern.strip() == stripped or pattern in line for pattern in patterns):
+        if line.strip() in normalized:
             matched.add(line_no)
     return frozenset(matched)
 
@@ -124,6 +126,28 @@ def _build_units(
             ranges.append(span)
     spans = {unit: tuple(ranges) for unit, ranges in collected.items()}
     return frozenset(spans), spans
+
+
+def _span_is_template(span: LineRange, template_lines: frozenset[int]) -> bool:
+    if not template_lines:
+        return False
+    return all(line in template_lines for line in range(span.start, span.end + 1))
+
+
+def _template_units(
+    units: frozenset[Unit],
+    spans: dict[Unit, tuple[LineRange, ...]],
+    template_lines: frozenset[int],
+) -> frozenset[Unit]:
+    if not units or not template_lines:
+        return frozenset()
+    return frozenset(
+        unit
+        for unit in units
+        if spans.get(unit) and all(
+            _span_is_template(span, template_lines) for span in spans[unit]
+        )
+    )
 
 
 def _token_events(code: str) -> tuple[list[tuple[str, int, int]] | None, str | None]:
@@ -158,6 +182,7 @@ def build_token_features(submission: Submission, assignment: Assignment) -> Feat
             units=frozenset(),
             spans={},
             template_lines=template_lines,
+            template_units=frozenset(),
         )
 
     units, spans = _build_units(events)
@@ -175,6 +200,7 @@ def build_token_features(submission: Submission, assignment: Assignment) -> Feat
         units=units,
         spans=spans,
         template_lines=template_lines,
+        template_units=_template_units(units, spans, template_lines),
     )
 
 
@@ -283,6 +309,7 @@ def build_ast_features(submission: Submission, assignment: Assignment) -> Featur
             units=frozenset(),
             spans={},
             template_lines=template_lines,
+            template_units=frozenset(),
         )
 
     mapping = _user_identifiers(tree)
@@ -307,6 +334,7 @@ def build_ast_features(submission: Submission, assignment: Assignment) -> Featur
         units=units,
         spans=spans,
         template_lines=template_lines,
+        template_units=_template_units(units, spans, template_lines),
         structure_hash=structure_hash,
     )
 
