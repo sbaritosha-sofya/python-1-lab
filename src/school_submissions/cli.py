@@ -7,9 +7,13 @@ from pathlib import Path
 from typing import Any
 
 from .analysis_service import AnalysisService
+from .comparison import find_same_student_revisions, find_top_k
+from .features import FEATURE_VERSION, supported_methods
 from .models import Assignment, Submission
 from .parser import parse_assignment, parse_submission
+from .pipeline import index_size_bytes, iter_features
 from .service import SubmissionService
+from .sources import JSONLSource
 
 
 def cmd_import(args: argparse.Namespace) -> int:
@@ -125,6 +129,58 @@ def cmd_analyze(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_find_similar(args: argparse.Namespace) -> int:
+    assignment = _load_assignment(args.assignment)
+    source = JSONLSource(args.input)
+    features = []
+    invalid: list[dict[str, Any]] = []
+    stream = iter_features(source, assignment, args.method)
+
+    with source:
+        for feature in stream:
+            features.append(feature)
+            if feature.status != "ok":
+                invalid.append(feature.to_dict())
+
+    results: list[dict[str, Any]] = []
+    for target in features:
+        top = find_top_k(
+            target,
+            features,
+            k=args.top_k,
+            include_same_student=args.include_same_student,
+            max_evidence=args.max_evidence,
+        )
+        revisions = find_same_student_revisions(
+            target,
+            features,
+            max_evidence=args.max_evidence,
+        )
+        results.append(
+            {
+                "submission_id": target.submission_id,
+                "student_id": target.student_id,
+                "status": target.status,
+                "top": [item.to_dict() for item in top],
+                "same_student_revisions": [item.to_dict() for item in revisions],
+            }
+        )
+
+    report = {
+        "assignment_id": assignment.assignment_id,
+        "method": args.method,
+        "method_version": FEATURE_VERSION,
+        "submissions_seen": stream.seen,
+        "submissions_indexed": len(features),
+        "skipped_other_assignment": stream.skipped_other_assignment,
+        "index_size_bytes_estimate": index_size_bytes(features),
+        "invalid_features": invalid,
+        "results": results,
+    }
+    print(json.dumps(report, ensure_ascii=False, indent=2))
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="school-submissions",
@@ -149,6 +205,41 @@ def build_parser() -> argparse.ArgumentParser:
         help="Идентификатор анализатора (если не указан -- запускает все)",
     )
     analyze_parser.set_defaults(func=cmd_analyze)
+
+    similar_parser = subparsers.add_parser(
+        "find-similar",
+        help="Поиск похожих сдач в одном задании",
+    )
+    similar_parser.add_argument("input", help="Путь к .jsonl файлу с сдачами")
+    similar_parser.add_argument(
+        "--assignment",
+        required=True,
+        help="Путь к JSON-файлу задания",
+    )
+    similar_parser.add_argument(
+        "--method",
+        choices=supported_methods(),
+        default=supported_methods()[0],
+        help="Метод сравнения",
+    )
+    similar_parser.add_argument(
+        "--top-k",
+        type=int,
+        default=5,
+        help="Сколько кандидатов показывать для каждой сдачи",
+    )
+    similar_parser.add_argument(
+        "--max-evidence",
+        type=int,
+        default=10,
+        help="Сколько совпавших фрагментов прикладывать к паре",
+    )
+    similar_parser.add_argument(
+        "--include-same-student",
+        action="store_true",
+        help="Разрешить повторные версии одного студента в top-k",
+    )
+    similar_parser.set_defaults(func=cmd_find_similar)
 
     return parser
 

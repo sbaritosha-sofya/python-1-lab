@@ -1,0 +1,23 @@
+{
+  "setup_families": [
+    "sort-a",
+    "sort-c",
+    "counter-e"
+  ],
+  "eval_families": [
+    "sort-b",
+    "sort-d",
+    "sort-template",
+    "counter-f"
+  ],
+  "setup_submissions": [
+    "s17",
+    "s18",
+    "s19"
+  ],
+  "eval_submissions": [
+    "s20",
+    "s21",
+    "s22"
+  ]
+}

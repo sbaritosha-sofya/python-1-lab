@@ -1,0 +1,6 @@
+{
+  "assignment_id": "lab-counter",
+  "name": "Подсчёт символов",
+  "description": "Вернуть частоты символов в строке.",
+  "allowed_templates": []
+}

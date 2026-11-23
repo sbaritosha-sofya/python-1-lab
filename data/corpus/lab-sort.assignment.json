@@ -1,0 +1,9 @@
+{
+  "assignment_id": "lab-sort",
+  "name": "Сортировка уникальных значений",
+  "description": "Вернуть отсортированный список без повторов.",
+  "allowed_templates": [
+    "def solve(items):",
+    "return sorted(items)"
+  ]
+}
